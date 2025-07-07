@@ -37,10 +37,20 @@ def handle_client(client_socket: socket) -> None:
                 client_socket (Type: socket)
     '''
     request = client_socket.recv(1024)
-    print("Received request:")
-    print(request.decode())
-    
-    response = b"HTTP/1.1 200 OK\r\n\r\n"
+    request = request.decode()
+
+    request_parts = request.split('\r\n')
+    http_method, target, http_version = request_parts[0].split(' ')
+    host = request_parts[1]
+    user_agent = request_parts[2]
+    accept = request_parts[3]
+    request_body = request_parts[5]
+
+    if target == "/":
+        response = b"HTTP/1.1 200 OK\r\n\r\n"
+    else:
+        response = b"HTTP/1.1 404 Not Found\r\n\r\n"
+
     client_socket.sendall(response)
     client_socket.close()
 
