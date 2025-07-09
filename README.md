@@ -9,5 +9,6 @@ Along the way you'll learn about TCP servers,
 [HTTP request syntax](https://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html),
 and more.
 
-**Note**: If you're viewing this repo on GitHub, head over to
-[codecrafters.io](https://codecrafters.io) to try the challenge.
+The handlers can be declared just like in Flask
+The first argument of every handler must be request of type Request which consists of the object related to the request which invoked this handler
+The body member of request object is of type string, irrespective of how it's passed be it JSON or something else
