@@ -113,15 +113,22 @@ class HTTPServer:
             
             # Override HTTP version to what we received in request
             response.http_version = request.http_version
+            
             # Only add the content type here if not done in handler
             if "content-type" not in response.headers:
                         response.add_header("Content-Type", "text/plain")
-            # Override content length
+
+            # Support gzip compression if mentioned in request
+            if "accept-encoding" in request.headers:
+                acceptable_encodings = request.headers["accept-encoding"].split(', ')
+                if "gzip" in acceptable_encodings:
+                    response.compress()
+
+            # Override content length for correctness
             response.add_header("Content-Length", str(len(response.body)))
 
             # Send the reponse
             client_socket.sendall(response.get())
-
         except Exception as e:
             self.log(f"Exception: {e}")
         finally:
