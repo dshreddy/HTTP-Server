@@ -17,16 +17,15 @@
 
 A lightweight HTTP server **built from scratch** in Python with Flask-like routing, multithreading, dynamic URL parameters, gzip compression, and graceful shutdown.
 
-### 🚀 Features
+### Features
 
-* ✅ **Flask-style Routing**: Define endpoints using `@app.route(path, methods=["GET"])`
-* 🧠 **Dynamic URL Parameters**: e.g. `/files/tmp/{filename}`
-* 💬 **Custom Request & Response Objects** for clean endpoint code
-* 🔥 **Multithreaded**: Each client is handled in a separate thread
-* ⏳ **Idle Timeout**: Closes inactive client connections after 2 minutes
-* 📦 **Gzip Compression** (if `Accept-Encoding: gzip` is sent)
-* 🚫 **Graceful Shutdown**: Closes all sockets and threads by just pressing `q`
-* 👨‍💻 **Thread-aware Logging**: Logs include thread name, log levels, and colors
+* **Flask-style Routing**: Define endpoints using `@app.route(path, methods=["GET"])`
+* **Dynamic URL Parameters**: e.g. `/files/tmp/{filename}`
+* **Custom Request & Response Objects** for clean endpoint code
+* **Multithreaded**: Each client is handled in a separate thread
+* **Idle Timeout**: Closes inactive client connections after 2 minutes
+* **Gzip Compression** (if `Accept-Encoding: gzip` is sent)
+* **Graceful Shutdown**: Closes all sockets and threads by just pressing `q`
 
 ### Dependencies
 
@@ -143,6 +142,8 @@ def home(request: Request): # request: Request argument is needed in all end poi
 1. When you create an object of `HTTPServer` class the default constructor creates 2 threads, `accept_thread` to accept client connections and `input_thread` which blocks for user input from terminal.
 2. Inside the `accept_thread` there is a while loop that runs as long as the server is running and whenever we receive a client connection we will create a `client_thread` for each connection.
 3. Inside the `client_thread` there is while loop that receives data from client persistently unless the socket timeout is reached or the client sends a request with `Connection: close` header.
+
+![flow chart](./flow.png)
 
 ---
 
